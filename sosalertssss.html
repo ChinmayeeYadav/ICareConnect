@@ -140,9 +140,6 @@
             //     console.log("SOS Cancelled. No Firebase update.");
             // }
             document.getElementById("sosalert").innerText = "Untriggered";
-            database.ref("sos").set({
-                alert: false;
-            });
             window.location.href = "home.html"; // Navigate back to home page
         }
     </script>
