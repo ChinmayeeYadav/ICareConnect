@@ -48,9 +48,12 @@
             }
         }
 
-        .sos-alert-bool {
+        .sos-state {
             margin-top: 60px;
+            font-size: 24px;
+            font-weight: bold;
         }
+
 
         .cancel-button {
             margin-top: 80px;
@@ -70,10 +73,9 @@
 </head>
 <body>
 
-    <div class="sos-container">
-        <div class="sos-button">SOS</div>
-        <p>SOS Alerts: <span id="sosalert">UnTriggered</span></p>
-        <input type="checkbox" id="sosToggle" class="sos-alert-bool" onchange="updateSOS(this.checked)">
+    <div class="sos-container">   
+        <div class="sos-button" onclick="updateSOS()">SOS</div>
+        <p class="sos-state">SOS Alert: <span id="sosalert">Untriggered</span></p>
         <button class="cancel-button" onclick="cancelSOS()">Cancel</button>
     </div>
 
@@ -93,9 +95,13 @@
         firebase.initializeApp(firebaseConfig);
         var database = firebase.database();
 
-        function updateSOS(alert) {
-            document.getElementById("sosalert").innerText = alert;
-            database.ref("sos_alerts/sos_triggered").set(alert);
+        function updateSOS() {
+            document.getElementById("sosalert").innerText = "Triggered";
+            database.ref("sos/alert").set(true);
+
+            setTimeout(() => {
+                window.location.href = "home.html";
+            }, 30000);
         }
 
         // let sosTimeout, resetTimeout;
@@ -131,6 +137,7 @@
             //     clearTimeout(resetTimeout); // Cancel reset timer if it was set
             //     console.log("SOS Cancelled. No Firebase update.");
             // }
+            document.getElementById("sosalert").innerText = "Untriggered";
             window.location.href = "home.html"; // Navigate back to home page
         }
     </script>
