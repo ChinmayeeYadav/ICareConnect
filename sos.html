@@ -143,9 +143,9 @@
         }
 
         function cancelSOS() {
-            // clearTimeout(sosTimeout); // Stop Firebase update
-            // clearTimeout(resetTimeout); // Stop reset timer if it was set
-            // alert("SOS canceled.");
+            clearTimeout(sosTimeout); // Stop Firebase update
+            clearTimeout(resetTimeout); // Stop reset timer if it was set
+            alert("SOS canceled.");
             window.location.href = "home.html"; // Navigate back to home page
         }
     </script>
