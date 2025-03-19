@@ -48,6 +48,10 @@
             }
         }
 
+        .sos-alert-bool {
+            margin-top: 60px;
+        }
+
         .cancel-button {
             margin-top: 80px;
             padding: 10px 20px;
@@ -68,6 +72,8 @@
 
     <div class="sos-container">
         <div class="sos-button">SOS</div>
+        <p>SOS Alerts: <span id="sosalert">UnTriggered</span></p>
+        <input type="checkbox" id="sosToggle" class="sos-alert-bool" onchange="updateSOS(this.checked)">
         <button class="cancel-button" onclick="cancelSOS()">Cancel</button>
     </div>
 
@@ -87,39 +93,44 @@
         firebase.initializeApp(firebaseConfig);
         var database = firebase.database();
 
-        let sosTimeout, resetTimeout;
-        let sosActivated = false;
+        function updateSOS(alert) {
+            document.getElementById("sosalert").innerText = alert;
+            database.ref("sos_alerts/sos_triggered").set(alert);
+        }
 
-        // Start 15-second timer when the page loads
-        window.onload = function () {
-            sosTimeout = setTimeout(() => {
-                // After 15 seconds, update Firebase
-                database.ref("sos_alerts").set({
-                    sos_triggered: true,
-                    timestamp: new Date().toISOString()
-                });
+        // let sosTimeout, resetTimeout;
+        // let sosActivated = false;
 
-                console.log("SOS Triggered! Firebase Updated.");
+        // // Start 15-second timer when the page loads
+        // window.onload = function () {
+        //     sosTimeout = setTimeout(() => {
+        //         // After 15 seconds, update Firebase
+        //         database.ref("sos_alerts").set({
+        //             sos_triggered: true,
+        //             timestamp: new Date().toISOString()
+        //         });
 
-                // Set a 30-second timer to reset SOS back to false
-                resetTimeout = setTimeout(() => {
-                    database.ref("sos_alerts").set({
-                        sos_triggered: false,
-                        timestamp: new Date().toISOString()
-                    });
-                    console.log("SOS Reset to False.");
-                }, 30000);
+        //         console.log("SOS Triggered! Firebase Updated.");
 
-                sosActivated = true; // Mark as activated
-            }, 15000);
-        };
+        //         // Set a 30-second timer to reset SOS back to false
+        //         resetTimeout = setTimeout(() => {
+        //             database.ref("sos_alerts").set({
+        //                 sos_triggered: false,
+        //                 timestamp: new Date().toISOString()
+        //             });
+        //             console.log("SOS Reset to False.");
+        //         }, 30000);
+
+        //         sosActivated = true; // Mark as activated
+        //     }, 15000);
+        // };
 
         function cancelSOS() {
-            if (!sosActivated) {
-                clearTimeout(sosTimeout); // Cancel SOS trigger
-                clearTimeout(resetTimeout); // Cancel reset timer if it was set
-                console.log("SOS Cancelled. No Firebase update.");
-            }
+            // if (!sosActivated) {
+            //     clearTimeout(sosTimeout); // Cancel SOS trigger
+            //     clearTimeout(resetTimeout); // Cancel reset timer if it was set
+            //     console.log("SOS Cancelled. No Firebase update.");
+            // }
             window.location.href = "home.html"; // Navigate back to home page
         }
     </script>
