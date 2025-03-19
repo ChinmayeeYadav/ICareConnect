@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Style for the container and sections */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            padding: 20px;
+            margin-bottom: 15px;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .section:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        video {
+            display: none;
+            width: 100%;
+            height: auto;
+        }
+
+        /* Cross button to stop video */
+        #closeButton {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 40px;
+        }
+
+        #closeButton:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Exercise</h1>
+
+        <p>Select the type of patient:</p>
+        <select id="patientType" onchange="loadExercises()">
+            <option value="">-- Select Patient Type --</option>
+            <option value="senior">Senior Citizen</option>
+            <option value="injured">Injured Patient</option>
+            <option value="child">Paralized Patient</option>
+            <option value="general">Physical Disability Patient</option>
+        </select>
+
+        <div id="exerciseSections">
+            <!-- Sections for exercises will be dynamically loaded here -->
+        </div>
+
+        <!-- Close Button -->
+        <button id="closeButton" onclick="stopVideo()">X</button>
+    </div>
+
+    <script>
+        let playingVideo = null; // Track the currently playing video
+
+        // Exercise videos mapped to patient types
+        const exerciseVideos = {
+            senior: [
+                { id: 'meditation', name: 'Meditation', videoSrc: 'senior_meditation.mp4' },
+                { id: 'handMovements', name: 'Hand Movements', videoSrc: 'senior_hand_movements.mp4' }
+            ],
+            injured: [
+                { id: 'legMovements', name: 'Leg Movements', videoSrc: 'injured_leg_movements.mp4' },
+                { id: 'bodyStretching', name: 'Body Stretching', videoSrc: 'injured_body_stretching.mp4' }
+            ],
+            child: [
+                { id: 'funExercise', name: 'Fun Exercises', videoSrc: 'child_fun_exercise.mp4' }
+            ],
+            general: [
+                { id: 'yoga', name: 'Yoga', videoSrc: 'general_yoga.mp4' },
+                { id: 'aerobics', name: 'Aerobics', videoSrc: 'general_aerobics.mp4' }
+            ]
+        };
+
+        function loadExercises() {
+            const patientType = document.getElementById('patientType').value;
+            const exerciseSections = document.getElementById('exerciseSections');
+
+            // Clear previous exercises
+            exerciseSections.innerHTML = '';
+
+            // If no patient type selected, exit
+            if (!patientType) return;
+
+            // Get exercises for the selected patient type
+            const exercises = exerciseVideos[patientType] || [];
+
+            // Dynamically create exercise sections
+            exercises.forEach(exercise => {
+                const section = document.createElement('div');
+                section.className = 'section';
+                section.textContent = exercise.name;
+                section.onclick = () => playVideo(exercise.videoSrc);
+                exerciseSections.appendChild(section);
+            });
+        }
+
+        function playVideo(videoSrc) {
+            try {
+                // Stop any currently playing video
+                if (playingVideo) stopVideo();
+
+                // Create a video element dynamically
+                const video = document.createElement('video');
+                video.src = videoSrc;
+                video.controls = true;
+                video.style.display = 'block';
+                video.style.width = '100%';
+
+                // Add the video element to the DOM
+                const container = document.getElementById('exerciseSections');
+                container.appendChild(video);
+                video.play();
+
+                playingVideo = video;
+
+                // Show the close button
+                document.getElementById('closeButton').style.display = 'block';
+            } catch (error) {
+                console.error('An error occurred while trying to play the video:', error.message);
+                alert('Sorry, something went wrong. Please try again.');
+            }
+        }
+
+        function stopVideo() {
+            if (playingVideo) {
+                playingVideo.pause();
+                playingVideo.remove();
+                playingVideo = null;
+                document.getElementById('closeButton').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

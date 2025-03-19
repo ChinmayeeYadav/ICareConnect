@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS Alert</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fff;
+            flex-direction: column;
+        }
+
+        .sos-container {
+            text-align: center;
+        }
+
+        .sos-button {
+            width: 250px;
+            height: 250px;
+            background-color: red;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+            cursor: pointer;
+            animation: sosAlert 1s infinite alternate;
+        }
+
+        @keyframes sosAlert {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+            }
+            100% {
+                transform: scale(1.2);
+                box-shadow: 0 0 30px rgba(255, 0, 0, 1);
+            }
+        }
+
+        .cancel-button {
+            margin-top: 80px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color:black;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .cancel-button:hover {
+            background-color: darkgray;
+        }
+
+        .alert-text {
+            margin-top: 20px;
+            font-size: 18px;
+            color: red;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sos-container">
+
+        <!-- <p class="alert-text" id="alertMessage">SOS triggered! Updating Firebase in 30 seconds</p> -->
+
+        <div class="sos-button" onclick="sendEmergencyAlert()">SOS</div>
+        
+        <button class="cancel-button" onclick="cancelSOS()">Cancel</button>
+        
+    </div>
+
+    <script>
+        // Firebase Configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDcMCyzCXYpaf7aSBXocIY3nCnf_BiERCs",
+            authDomain: "icareconnect-41539.firebaseapp.com",
+            databaseURL: "https://icareconnect-41539-default-rtdb.firebaseio.com",
+            projectId: "icareconnect-41539",
+            storageBucket: "icareconnect-41539.firebasestorage.app",
+            messagingSenderId: "941141315460",
+            appId: "1:941141315460:web:ada07508f3933c261457d1"
+        };
+        /*
+         var firebaseConfig = {
+            apiKey: "AIzaSyC7N8MMiM3gKjShQ1GYJj4SwejZGb69Zd8",
+            authDomain: "servo-position.firebaseapp.com",
+            databaseURL: "https://servo-position-default-rtdb.firebaseio.com",
+            projectId: "servo-position",
+            storageBucket: "servo-position.firebasestorage.app",
+            messagingSenderId: "990217520676",
+            appId: "1:990217520676:web:8eda96a7edd3cc5a0c3ab1"
+        };
+        firebase.initializeApp(firebaseConfig);
+        var database = firebase.database();
+
+        function updateServo(pos) {
+            document.getElementById("servoPos").innerText = pos;
+            database.ref("servo/position").set(pos);
+        }
+        
+        */
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        var database = firebase.database();
+
+        let sosTimeout, resetTimeout;
+        
+        function sendEmergencyAlert() {
+            alert("Emergency SOS message sent!");
+            document.getElementById("alertMessage").style.display = "block";
+
+            // Start the 15-second timer to update Firebase
+            sosTimeout = setTimeout(() => {
+                database.ref("sos/alerts").set("Triggered");
+                alert("SOS alert updated in Firebase!");
+
+                // Start a 30-second timer to reset the SOS status to "Untriggered"
+                resetTimeout = setTimeout(() => {
+                    database.ref("sos/alerts").set("Untriggered");
+                    alert("SOS status reset to Untriggered.");
+                }, 30000);
+
+                // Redirect to home after Firebase update
+                
+            }, 30000);
+
+            window.location.href = "home.html";
+        }
+
+
+
+        function cancelSOS() {
+            clearTimeout(sosTimeout); // Stop Firebase update
+            alert("SOS canceled.");
+            window.location.href = "home.html"; // Navigate back to home page
+        }
+    </script>
+
+</body>
+</html>

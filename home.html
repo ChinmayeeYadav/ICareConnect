@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Basic reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header {
+            padding: 20px;
+            background: #007BFF;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .section {
+            padding: 50px;
+            background-color: #C1E3FF;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .section:hover {
+            background-color: #A3D1FF;
+            transform: scale(1.05);
+        }
+
+        .robot-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        .control-box {
+            width: 80px;
+            height: 80px;
+            background-color: #007BFF;
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .control-box:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to the Smart Healthcare Unit</h1>
+        </div>
+
+        <div class="sections">
+            <div class="section" id="medicineAlarms" onclick="location.href='medicinealarms.html';">
+                <h2>Medicine Alarms</h2>
+                <p>Set your medicine schedule here.</p>
+            </div>
+            <div class="section" id="exercise" onclick="location.href='exercise.html';">
+                <h2>Exercise</h2>
+                <p>Start exercise routines for the patient.</p>
+            </div>
+            <div class="section" id="videoCall" onclick="startVideoCall()">
+                <h2>Video Call</h2>
+                <p>Initiate a video call with the patient.</p>
+            </div>
+            <div class="section" id="sos" onclick="sendSOS()">
+                <h2>SOS</h2>
+                <p>Send an emergency message to family members.</p>
+            </div>
+        </div>
+
+        <!-- Robot Navigation Controls -->
+        <div class="robot-controls">
+            <div class="control-box" onclick="moveRobot('left')">&lt;</div>
+            <div class="control-box" onclick="moveRobot('right')">&gt;</div>
+        </div>
+    </div>
+
+    <script>
+        function startVideoCall() {
+            window.open("https://mail.google.com/chat/u/0/#chat/home", "_blank");
+        }
+
+        function sendSOS() {
+            window.location.href = "sos.html"; // Redirect to the SOS alert page
+        }
+
+
+        function moveRobot(direction) {
+            if (direction === 'left') {
+                alert("Robot moving left");
+                // Add ESP8266 command logic here
+            } else if (direction === 'right') {
+                alert("Robot moving right");
+                // Add ESP8266 command logic here
+            }
+        }
+    </script>
+</body>
+</html>

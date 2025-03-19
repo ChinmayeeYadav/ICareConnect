@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - iCare Connect</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .register-container h2 {
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .register-container label {
+            font-weight: 500;
+            text-align: left;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .register-container input, 
+        .register-container select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .register-container input:focus, 
+        .register-container select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        .register-container button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .register-container button:hover {
+            background: #0056b3;
+        }
+
+        .register-container p {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .register-container a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .register-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h2>Create an Account</h2>
+        <form id="registerForm" onsubmit="register(event)">
+            <label for="name">Patient Name:</label>
+            <input type="text" id="name" placeholder="Enter full name" required>
+
+            <label for="password">Set Password:</label>
+            <input type="password" id="password" placeholder="Enter password" required>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" placeholder="Re-enter password" required>
+
+            <label for="type">Type of Patient:</label>
+            <select id="type" required>
+                <option value="" disabled selected>Select type</option>
+                <option value="Elderly Patients">Elderly Patients</option>
+                <option value="Post-Surgery & Rehabilitation">Post-Surgery & Rehabilitation</option>
+                <option value="Paralyzed & Disabled Patients">Paralyzed & Disabled Patients</option>
+                <option value="Chronic Illness Patients">Chronic Illness Patients</option>
+            </select>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" placeholder="Enter age" min="0" required>
+
+            <label for="contact">Contact Number:</label>
+            <input type="tel" id="contact" placeholder="Enter phone number" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" placeholder="Enter email" required>
+
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="index.html">Login here</a></p>
+    </div>
+
+    <script>
+        function register(event) {
+            event.preventDefault();
+    
+            const name = document.getElementById("name").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const email = document.getElementById("email").value;
+    
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+    
+            // Store user credentials in localStorage
+            const userData = { email: email, password: password };
+            localStorage.setItem("user", JSON.stringify(userData));
+    
+            alert("Registration successful! Please log in.");
+            window.location.href = "index.html"; // Redirect to Login
+        }
+    </script>
+    
+    
+
+</body>
+</html>
