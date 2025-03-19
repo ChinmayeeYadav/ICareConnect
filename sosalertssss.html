@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <title>SOS Alert</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <style>
         body {
             display: flex;
@@ -79,7 +79,7 @@
         <button class="cancel-button" onclick="cancelSOS()">Cancel</button>
     </div>
 
-    <script>
+    <script defer>
         // Firebase Configuration
         var firebaseConfig = {
             piKey: "AIzaSyC7N8MMiM3gKjShQ1GYJj4SwejZGb69Zd8",
