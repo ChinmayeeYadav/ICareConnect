@@ -97,7 +97,9 @@
 
         function updateSOS() {
             document.getElementById("sosalert").innerText = "Triggered";
-            database.ref("sos/alert").set(true);
+            database.ref("sos").set({
+                alert: true;
+            });
 
             setTimeout(() => {
                 window.location.href = "home.html";
