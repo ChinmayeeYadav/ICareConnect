@@ -119,33 +119,32 @@
         var database = firebase.database();
 
         let sosTimeout, resetTimeout;
-        
-        function sendEmergencyAlert() {
-            alert("Emergency SOS message sent!");
-            document.getElementById("alertMessage").style.display = "block";
 
-            // Start the 15-second timer to update Firebase
-            sosTimeout = setTimeout(() => {
-                database.ref("sos/alerts").setString("Triggered");
+        sosTimeout = setTimeout(() => {
+                database.ref("sos_alerts").set({
+                    status: "Triggered",
+                    timestamp: new Date().toISOString()
+                });
                 alert("SOS alert updated in Firebase!");
 
                 // Start a 30-second timer to reset the SOS status to "Untriggered"
                 resetTimeout = setTimeout(() => {
-                    database.ref("sos/alerts").setString("Untriggered");
+                    database.ref("sos_alerts").set({
+                        status: "Untriggered",
+                        timestamp: new Date().toISOString()
+                    });
                     alert("SOS status reset to Untriggered.");
                 }, 30000);
 
                 // Redirect to home after Firebase update
                 
-            }, 30000);
-
+            }, 15000);
             window.location.href = "home.html";
         }
 
-
-
         function cancelSOS() {
             clearTimeout(sosTimeout); // Stop Firebase update
+            clearTimeout(resetTimeout); // Stop reset timer if it was set
             alert("SOS canceled.");
             window.location.href = "home.html"; // Navigate back to home page
         }
