@@ -126,12 +126,12 @@
 
             // Start the 15-second timer to update Firebase
             sosTimeout = setTimeout(() => {
-                database.ref("sos/alerts").set("Triggered");
+                database.ref("sos/alerts").setString("Triggered");
                 alert("SOS alert updated in Firebase!");
 
                 // Start a 30-second timer to reset the SOS status to "Untriggered"
                 resetTimeout = setTimeout(() => {
-                    database.ref("sos/alerts").set("Untriggered");
+                    database.ref("sos/alerts").setString("Untriggered");
                     alert("SOS status reset to Untriggered.");
                 }, 30000);
 
