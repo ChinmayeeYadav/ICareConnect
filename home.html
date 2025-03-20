@@ -88,11 +88,11 @@
         </div>
 
         <div class="sections">
-            <div class="section" id="medicineAlarms" onclick="location.href='medicinealarms.html';">
+            <div class="section" id="medicineAlarms" onclick="medicinealarm()';">
                 <h2>Medicine Alarms</h2>
                 <p>Set your medicine schedule here.</p>
             </div>
-            <div class="section" id="exercise" onclick="location.href='exercise.html';">
+            <div class="section" id="exercise" onclick="exercisetime()';">
                 <h2>Exercise</h2>
                 <p>Start exercise routines for the patient.</p>
             </div>
@@ -114,6 +114,12 @@
     </div>
 
     <script>
+        function medicinealarm() {
+            window.location.href = "medicinealarms.html";
+        }
+        function exercisetime() {
+            window.location.href = "exercise.html";
+        }
         function startVideoCall() {
             window.open("https://mail.google.com/chat/u/0/#chat/home", "_blank");
         }
