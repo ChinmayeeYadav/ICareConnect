@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Exercise Routine</h2>
+
+        <div class="patient-info">
+            <p><strong>Patient Type:</strong> <span id="patientTypeDisplay">Loading...</span></p>
+        </div>
+
+        <video id="exerciseVideo" width="100%" controls autoplay>
+            <source src="" id="videoSource" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script>
+        // Fetch patient type from sessionStorage (set during login)
+        const patientType = localStorage.getItem("patientType");
+
+        // Display patient type in the UI
+        document.getElementById("patientTypeDisplay").innerText = patientType || "Unknown";
+
+        // Exercise videos mapped to patient type
+        const videoLinks = {
+            "Elderly Patients": ["Armcircles_Elderly.mp4", "Seatedlegs_Elderly.mp4"],
+            "Post-Surgery & Rehabilitation": ["AnklePumps_PS.mp4", "ChairSquats_PS.mp4"],
+            "Paralyzed & Disabled Patients": ["HandMovement_Paralyzed.mp4", "PassiveLegStretching_Paralyzed.mp4"],
+            "Chronic Illness Patients": ["DeepBreathing_Chronic.mp4", "SeatedMarching_Chronic.mp4"]
+        };
+
+        // Check if patient type exists in the video list and load the first video
+        if (videoLinks[patientType]) {
+            document.getElementById("videoSource").src = videoLinks[patientType][0]; // Play the first exercise video
+            document.getElementById("exerciseVideo").load();
+        } else {
+            alert("No exercise routine available for this patient type.");
+        }
+    </script>
+
+</body>
+</html>
