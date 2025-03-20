@@ -112,8 +112,8 @@
             <label for="confirmPassword">Confirm Password:</label>
             <input type="password" id="confirmPassword" placeholder="Re-enter password" required>
 
-            <label for="type">Type of Patient:</label>
-            <select id="type" required>
+            <label for="patientType">Type of Patient:</label>
+            <select id="patientType" required>
                 <option value="" disabled selected>Select type</option>
                 <option value="Elderly Patients">Elderly Patients</option>
                 <option value="Post-Surgery & Rehabilitation">Post-Surgery & Rehabilitation</option>
@@ -143,15 +143,23 @@
             const password = document.getElementById("password").value;
             const confirmPassword = document.getElementById("confirmPassword").value;
             const email = document.getElementById("email").value;
+            const patientType = document.getElementById("patientType").value;
     
             if (password !== confirmPassword) {
                 alert("Passwords do not match!");
                 return;
             }
+
+            if (!patientType) {
+                alert("Please select a patient type.");
+                return;
+            }
+
     
             // Store user credentials in localStorage
-            const userData = { email: email, password: password };
+            const userData = { email: email, password: password, patientType: patientType };
             localStorage.setItem("user", JSON.stringify(userData));
+            localStorage.setItem("patientType", patientType);
     
             alert("Registration successful! Please log in.");
             window.location.href = "index.html"; // Redirect to Login
