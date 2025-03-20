@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <title>Home Page</title>
     <link rel="stylesheet" href="style.css">
     <style>
@@ -106,10 +108,10 @@
             </div>
         </div>
 
-        <div id="alarmNotification" class="hidden">
+<!--         <div id="alarmNotification" class="hidden">
             <p id="alarmMessage"></p>
             <button onclick="stopAlarm()">Stop Alarm</button>
-        </div>
+        </div> -->
 
     </div>
 
@@ -121,6 +123,37 @@
     </div>
 
     <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyDcMCyzCXYpaf7aSBXocIY3nCnf_BiERCs",
+            authDomain: "icareconnect-41539.firebaseapp.com",
+            databaseURL: "https://icareconnect-41539-default-rtdb.firebaseio.com",
+            projectId: "icareconnect-41539",
+            storageBucket: "icareconnect-41539.firebasestorage.app",
+            messagingSenderId: "941141315460",
+            appId: "1:941141315460:web:ada07508f3933c261457d1"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        var database = firebase.database();
+
+        let currentAngle = 90;
+
+        function moveRobot(direction) {
+            if (direction === 'left') {
+                // alert("Robot moving left");
+                currentAngle = currentAngle + 15;
+                // Add ESP8266 command logic here
+            } else if (direction === 'right') {
+                // alert("Robot moving right");
+                currentAngle = currentAngle - 15;
+                // Add ESP8266 command logic here
+            }
+            currentAngle = currentAngle;
+            database.ref("robot/movement").set(currentAngle);
+
+        }
+        
         function medicinealarm() {
             window.location.href = "medicinealarms.html";
         }
@@ -135,17 +168,6 @@
 
         function sendSOS() {
             window.location.href = "sosalertssss.html"; // Redirect to the SOS alert page
-        }
-
-
-        function moveRobot(direction) {
-            if (direction === 'left') {
-                alert("Robot moving left");
-                // Add ESP8266 command logic here
-            } else if (direction === 'right') {
-                alert("Robot moving right");
-                // Add ESP8266 command logic here
-            }
         }
     </script>
     <script src="script.js"></script>
