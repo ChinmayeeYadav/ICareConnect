@@ -106,6 +106,13 @@
             </div>
         </div>
 
+        <div id="alarmNotification" class="hidden">
+            <p id="alarmMessage"></p>
+            <button onclick="stopAlarm()">Stop Alarm</button>
+        </div>
+
+    </div>
+
         <!-- Robot Navigation Controls -->
         <div class="robot-controls">
             <div class="control-box" onclick="moveRobot('left')">&lt;</div>
@@ -117,6 +124,8 @@
         function medicinealarm() {
             window.location.href = "medicinealarms.html";
         }
+
+        
         function exercisetime() {
             window.location.href = "exercise.html";
         }
@@ -139,5 +148,6 @@
             }
         }
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
