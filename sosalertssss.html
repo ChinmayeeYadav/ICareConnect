@@ -100,8 +100,15 @@
             database.ref("sos/alert").set(true);
 
             setTimeout(() => {
-                window.location.href = "home.html";
-            }, 30000);
+                document.getElementById("sosalert").innerText = "Untriggered";
+                database.ref("sos/alert").set(false);
+
+                // Wait another 20 seconds before redirecting to home.html
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 20000);
+
+        }, 20000);
         }
 
         // let sosTimeout, resetTimeout;
