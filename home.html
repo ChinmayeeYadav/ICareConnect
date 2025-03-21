@@ -189,6 +189,20 @@
             setInterval(checkAlarm, 1000); 
         });
 
+        var firebaseConfig = {
+            apiKey: "AIzaSyDcMCyzCXYpaf7aSBXocIY3nCnf_BiERCs",
+            authDomain: "icareconnect-41539.firebaseapp.com",
+            databaseURL: "https://icareconnect-41539-default-rtdb.firebaseio.com",
+            projectId: "icareconnect-41539",
+            storageBucket: "icareconnect-41539.firebasestorage.app",
+            messagingSenderId: "941141315460",
+            appId: "1:941141315460:web:ada07508f3933c261457d1"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        var database = firebase.database();
+
         let alarms = JSON.parse(localStorage.getItem("alarms")) || [];
         let audio = new Audio("medicine_reminder.mp3");
         audio.loop = true;
@@ -217,6 +231,19 @@
             audio.pause();
             audio.currentTime = 0;
             isAlarmActive = false;
+
+            database.ref("medicine/control").set(true);
+
+            setTimeout(() => {
+                // document.getElementById("sosalert").innerText = "Untriggered";
+                database.ref("medicine/control").set(false);
+
+                // Wait another 20 seconds before redirecting to home.html
+                // setTimeout(() => {
+                //     window.location.href = "home.html";
+                // }, 20000);
+             }, 20000);
+
 
             document.getElementById("alarmNotification").style.display = "none";
 
