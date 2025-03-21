@@ -81,6 +81,14 @@
             background-color: #0056b3;
             transform: scale(1.1);
         }
+
+        .hidden { display: none; }
+        #alarmNotification {
+            background-color: #007BFF; padding: 20px; border-radius: 10px; text-align: center;
+            font-size: 18px; font-weight: bold; display: none;
+        }
+        #alarmNotification button { background-color: red; color: white; padding: 10px; border: none; font-size: 16px; cursor: pointer; margin-top: 10px; }
+        #alarmNotification button:hover { background-color: darkred; }
     </style>
 </head>
 <body>
@@ -114,6 +122,11 @@
         </div> -->
 
     </div>
+
+        <div id="alarmNotification">
+            <p>🚨 Hey buddy, it's time to take your medicine! 🚨</p>
+            <button onclick="stopAlarm()">Stop Alarm</button>
+        </div>
 
         <!-- Robot Navigation Controls -->
         <div class="robot-controls">
@@ -168,6 +181,49 @@
 
         function sendSOS() {
             window.location.href = "sosalertssss.html"; // Redirect to the SOS alert page
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            checkAlarm();
+            setInterval(checkAlarm, 1000); 
+        });
+
+        let alarms = JSON.parse(localStorage.getItem("alarms")) || [];
+        let audio = new Audio("medicine_reminder.mp3");
+        audio.loop = true;
+        let isAlarmActive = false;
+
+        function checkAlarm() {
+            let now = new Date();
+            let currentTime = now.toTimeString().split(" ")[0].slice(0, 5); 
+
+            if (alarms.includes(currentTime) && !isAlarmActive) {
+                showAlarmNotification();
+                playAlarm();
+                isAlarmActive = true;
+            }
+        }
+
+        function showAlarmNotification() {
+            document.getElementById("alarmNotification").style.display = "block";
+        }
+
+        function playAlarm() {
+            audio.play().catch(error => console.error("Audio play failed:", error));
+        }
+
+        function stopAlarm() {
+            audio.pause();
+            audio.currentTime = 0;
+            isAlarmActive = false;
+
+            document.getElementById("alarmNotification").style.display = "none";
+
+            let now = new Date();
+            let currentTime = now.toTimeString().split(" ")[0].slice(0, 5);
+            alarms = alarms.filter(time => time !== currentTime);
+            localStorage.setItem("alarms", JSON.stringify(alarms));
         }
     </script>
     <script src="script.js"></script>
