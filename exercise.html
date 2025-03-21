@@ -19,6 +19,7 @@
             <source src="" id="videoSource" type="video/mp4">
             Your browser does not support the video tag.
         </video>
+    <button id="nextButton" onclick="playNextVideo()">Next Video</button>    
     </div>
 
     <script>
@@ -35,14 +36,27 @@
             "Paralyzed & Disabled Patients": ["HandMovement_Paralyzed.mp4", "PassiveLegStretching_Paralyzed.mp4"],
             "Chronic Illness Patients": ["DeepBreathing_Chronic.mp4", "SeatedMarching_Chronic.mp4"]
         };
+    let currentVideoIndex = 0; // Track current video
+        const videoElement = document.getElementById("exerciseVideo");
+        const videoSource = document.getElementById("videoSource");
 
         // Check if patient type exists in the video list and load the first video
-        if (videoLinks[patientType]) {
+    if (videoLinks[patientType]) {
             document.getElementById("videoSource").src = videoLinks[patientType][0]; // Play the first exercise video
             document.getElementById("exerciseVideo").load();
         } else {
             alert("No exercise routine available for this patient type.");
         }
+
+        function playNextVideo() {
+            if (videoLinks[patientType]) {
+                currentVideoIndex = (currentVideoIndex + 1) % 	videoLinks[patientType].length; // Cycle through videos
+                videoSource.src = videoLinks[patientType][currentVideoIndex];
+                videoElement.load();
+                videoElement.play();
+            }
+        } 
+        
     </script>
 
 </body>
