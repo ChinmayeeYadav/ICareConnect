@@ -160,6 +160,7 @@
             const user = { name, email, password, patientType, age, contact };
 
             localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("patientType", patientType);
     
             alert("Registration successful! Please log in.");
             window.location.href = "index.html"; // Redirect to Login
