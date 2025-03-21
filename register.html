@@ -159,7 +159,7 @@
             // Store user credentials in localStorage
             const user = { email: email, password: password, patientType: patientType };
 
-            localStorage.setItem(user, JSON.stringify({ password, patientType }));
+            localStorage.setItem("user", JSON.stringify({ password, patientType }));
     
             alert("Registration successful! Please log in.");
             window.location.href = "index.html"; // Redirect to Login
