@@ -99,27 +99,31 @@
         }
 
         function playNextVideo() {
-            
-            if (videoLinks[patientType]) {
-                currentVideoIndex = (currentVideoIndex + 1) % 	videoLinks[patientType].length; // Cycle through videos
-                videoSource.src = videoLinks[patientType][currentVideoIndex];
-                videoElement.load();
-                videoElement.play();
+            if (videoLinks[patientType] && videoLinks[patientType].length > 0) {
+            currentVideoIndex = (currentVideoIndex + 1) % videoLinks[patientType].length; // Cycle through videos
+            videoSource.src = videoLinks[patientType][currentVideoIndex];
+            videoElement.load();
+            videoElement.play();
+            } else {
+                console.error("No video links found for patient type.");
+                return;
             }
 
-            database.ref("exercise/update").set(true);
-
-            setTimeout(() => {
-                document.getElementById("sosalert").innerText = "Untriggered";
-                database.ref("exercise/update").set(false);
-
-                // Wait another 20 seconds before redirecting to home.html
+            database.ref("exercise/update").set(true)
+            .then(() => {
+                setTimeout(() => {
+                    document.getElementById("sosalert").innerText = "Untriggered";
+                    return database.ref("exercise/update").set(false);
+                }, 20000);
+            })
+            .then(() => {
                 setTimeout(() => {
                     window.location.href = "home.html";
-                }, 20000);
-
             }, 20000);
-        } 
+        })
+            .catch(error => console.error("Error updating database:", error));
+    }
+ 
         
     </script>
 
