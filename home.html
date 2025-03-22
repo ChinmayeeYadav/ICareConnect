@@ -169,12 +169,26 @@
         
         function medicinealarm() {
             window.location.href = "medicinealarms.html";
+            
         }
 
         
         function exercisetime() {
+            database.ref("exercise/update").set(true);
+
+            setTimeout(() => {
+                
+                database.ref("exercise/update").set(false);
+
+                // Wait another 20 seconds before redirecting to home.html
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 20000);
+
+            }, 20000);
             window.location.href = "exercise.html";
         }
+        
         function startVideoCall() {
             window.open("https://mail.google.com/chat/u/0/#chat/home", "_blank");
         }
