@@ -52,6 +52,12 @@
 
     <script defer>
         // Firebase Configuration
+        
+
+    </script>
+
+    <script>
+        // Fetch patient type from sessionStorage (set during login)
         var firebaseConfig = {
             apiKey: "AIzaSyDcMCyzCXYpaf7aSBXocIY3nCnf_BiERCs",
             authDomain: "icareconnect-41539.firebaseapp.com",
@@ -65,11 +71,7 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         var database = firebase.database();
-
-    </script>
-
-    <script>
-        // Fetch patient type from sessionStorage (set during login)
+        
         const patientType = localStorage.getItem("patientType");
 
         // Display patient type in the UI
@@ -95,6 +97,14 @@
         }
 
         function playNextVideo() {
+            
+            if (videoLinks[patientType]) {
+                currentVideoIndex = (currentVideoIndex + 1) % 	videoLinks[patientType].length; // Cycle through videos
+                videoSource.src = videoLinks[patientType][currentVideoIndex];
+                videoElement.load();
+                videoElement.play();
+            }
+
             database.ref("exercise/update").set(true);
 
             setTimeout(() => {
@@ -106,14 +116,7 @@
                     window.location.href = "home.html";
                 }, 20000);
 
-        }, 20000);
-            
-            if (videoLinks[patientType]) {
-                currentVideoIndex = (currentVideoIndex + 1) % 	videoLinks[patientType].length; // Cycle through videos
-                videoSource.src = videoLinks[patientType][currentVideoIndex];
-                videoElement.load();
-                videoElement.play();
-            }
+            }, 20000);
         } 
         
     </script>
