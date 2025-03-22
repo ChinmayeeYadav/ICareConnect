@@ -210,7 +210,6 @@
             database.ref("exercise/update").set(true);
 
             setTimeout(() => {
-                document.getElementById("sosalert").innerText = "Untriggered";
                 database.ref("exercise/update").set(false);
 
                 // Wait another 20 seconds before redirecting to home.html
